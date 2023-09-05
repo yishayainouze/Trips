@@ -1,0 +1,29 @@
+/* Styles for the background */
+body {
+    background: linear-gradient(90deg, blue, red);
+    margin: 0;
+    padding: 0;
+    height: 100vh; /* Set the height to fill the viewport */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  /* Styles for the buttons */
+  button {
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    margin: 10px;
+    cursor: pointer;
+    font-size: 16px;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+  
+    /* Add more styles as needed */
+  }
+  
+  button:hover {
+    background: linear-gradient(90deg, yellow, red);
+  }
+  

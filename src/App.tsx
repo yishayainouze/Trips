@@ -1,7 +1,6 @@
-import { useState } from 'react';
 import './App.css';
-import Home from './components/Home';
-import TripList from './components/Trips';
+// import Home from './components/Home';
+// import TripList from './components/Trips';
 import Ruoter from './components/Routes';
 // import './styles.css';
 // import UserLogin from './Components/UserLogin';
@@ -19,5 +18,5 @@ function App(): JSX.Element {
     </>
   )
 }
-export default 
+export default App
 

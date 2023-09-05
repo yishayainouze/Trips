@@ -1,32 +1,110 @@
+import { Link } from "react-router-dom";
+import axios from "axios";
 import { Trip } from "./Trips";
+// import { useContext, useEffect, useState } from "react";
 
-interface TripCardProps {
+interface DeleteProps {
   trip: Trip;
+  context: {
+    trips: Trip[];
+    setTrips: React.Dispatch<React.SetStateAction<Trip[] | null>>;
+  };
 }
 
-function TripCard({ trip }: TripCardProps) {
+export const Delete: React.FC<DeleteProps> = ({
+  trip,
+  context,
+}): JSX.Element => {
+  const { trips, setTrips } = context;
+
+  const axiosDeleteTrip = async () => {
+    try {
+      const response = await axios.delete(
+        `http://localhost:3000/api/trips/${trip.id}`,
+        {
+          headers: { authorization: "test-token" },
+        }
+      );
+
+      if (response.status === 200) {
+        console.log("deleted");
+        console.log(trips);
+
+        const updatedTrips  = trips.filter((t) => t.id !== trip.id);
+
+        setTrips(updatedTrips);
+      } else {
+        console.error("Error deleting trip. Status code:", response.status);
+      }
+    } catch (error) {
+      console.error("Error deleting trip:", error);
+    }
+  };
+
+  // if (deleted) {
+  //   return (
+  //     <div>
+  //       <p>Trip with ID {id} has been successfully deleted.</p>
+  //       <Link to="/trips">Back to Trips</Link>
+  //     </div>
+  //   );
+  // }
+
   return (
-    <div className="card">
-      <img src={trip.image} alt={trip.name} className="card-image" />
-      <div className="card-content">
-        <h2 className="card-title">{trip.name}</h2>
-        <p className="card-destination">{trip.destination}</p>
-        <p className="card-description">{trip.description}</p>
-        <p className="card-dates">
-          Dates: {trip.startDate} - {trip.endDate}
-        </p>
-        <p className="card-price">Price: ${trip.price}</p>
-        {/* <div className="card-activities"> */}
-          {/* <strong>Activities:</strong>
-          <ul>
-            {trip.activities.map((activity, index) => (
-              <li key={index}>{activity}</li>
-            ))}
-          </ul> */}
-        {/* </div> */}
-      </div>
+    <div className="card" style={{ display: "flex", border: "solid" }}>
+      <Link to={`/trip/${trip.id}`}>
+        <img
+          src={trip.image}
+          alt={trip.name}
+          width={"500px"}
+          className="card-image"
+        />
+        <div className="card-content">
+          <h2 className="card-title">{trip.name}</h2>
+          <p className="card-destination">{trip.destination}</p>
+          <p className="card-description">{trip.description}</p>
+          <p className="card-dates">
+            Dates: {trip.startDate} - {trip.endDate}
+          </p>
+          <p className="card-price">Price: ${trip.price}</p>
+        </div>
+      </Link>
+      <Link to="/Trips">
+        <button onClick={axiosDeleteTrip}>Delete</button>
+      </Link>
     </div>
   );
-}
+};
 
-export default TripCard;
+// oldversion
+// function DeleteCard({ trip, onDelete }: TripCardProps) {
+//   const [deleting, setDeleting] = useState(false);
+
+//   const handleDelete = async () => {
+//     try {
+//       setDeleting(true);
+
+//       const response = await axios.delete(
+//         `http://localhost:3000/api/trips/${trip.id}`,
+//         {
+//           headers: { authorization: "test-token" },
+//         }
+//       );
+
+//       if (response.status === 200) {
+//         onDelete(trip.id);
+//       } else {
+//         console.error("Error deleting trip. Status code:", response.status);
+//       }
+//     } catch (error) {
+//       console.error("Error deleting trip:", error);
+//     } finally {
+//       setDeleting(false);
+//     }
+//   };
+
+//   useEffect(() => {
+//     if (deleting) {
+//       handleDelete();
+//     }
+//   }, [deleting]);
