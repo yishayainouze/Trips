@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 import axios from "axios";
 interface Trip {
@@ -33,7 +33,10 @@ function TripDetails() {
   }, [id]);
 
   return (
-    <div>
+    <div style={{display:"flex"}}>
+      <Link to="/Trips">
+        <button>All Trips</button>
+      </Link>
       <h2>Trip Details</h2>
       <p>Trip ID: {id}</p>
       {trip && (
@@ -53,8 +56,7 @@ function TripDetails() {
               ))}
             </ul>
           </div>
-          <img src={trip.image} alt={trip.name} width={"500px"} />
-          
+          <img src={trip.image} alt={trip.name} width={"400px"} />
         </div>
       )}
     </div>

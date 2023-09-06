@@ -1,7 +1,6 @@
 import { Link } from "react-router-dom";
 import { currentView } from "../App";
-import "./Home.css"; // Import the CSS file
-
+import "./Home.css"; 
 interface HomeProps {
   nav: (cur: currentView) => void;
 }
@@ -18,6 +17,7 @@ function Home({ nav }: HomeProps) {
       <Link to="/UserRegistration">
         <button onClick={() => nav(currentView.SignIn)}>Sign In</button>
       </Link>
+      
     </>
   );
 }
